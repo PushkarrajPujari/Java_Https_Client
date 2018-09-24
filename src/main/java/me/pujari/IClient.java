@@ -17,6 +17,7 @@ public interface IClient {
             while ((line = bufferedReader.readLine()) != null) {
                 stringBuffer.append(line);
             }
+            bufferedReader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

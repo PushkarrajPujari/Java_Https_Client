@@ -1,33 +1,42 @@
 package me.pujari;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 
 public class HttpsClient implements IClient{
+    private URL url;
+    private HttpsURLConnection connection;
+
+    public HttpsClient(String uri) throws MalformedURLException {
+        this.url = new URL(uri);
+    }
     public IClient connect() {
         try{
-            URL url = new URL("");
-            HttpsURLConnection con = (HttpsURLConnection)url.openConnection();
-            System.out.printf("Connection - "+con);
-            BufferedReader br =
-                    new BufferedReader(
-                            new InputStreamReader(con.getInputStream()));
-
-            String input;
-
-            while ((input = br.readLine()) != null){
-                System.out.println(input);
-            }
-            br.close();
+            connection = (HttpsURLConnection)url.openConnection();
         }catch (Exception e){
             e.printStackTrace();
+        }finally {
+            try {
+                System.out.println("Response Code : "+connection.getResponseCode());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-    return null;
+    return this;
     }
 
     public Object getContent() {
+        StringBuffer stringBuffer = getMethod(()->{
+            try {
+                return connection.getInputStream();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        });
+        System.out.println(stringBuffer.toString());
         return null;
     }
 }
