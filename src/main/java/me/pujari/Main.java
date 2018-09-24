@@ -15,7 +15,8 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-         new ApacheHttpClient().connect("http://localhost:8084/SampleTomcat/");
+         //new ApacheHttpClient().connect("http://localhost:8084/SampleTomcat/");
+         new HttpsClient().connect("https://www.google.com/");
         } catch (Exception e) {
             e.printStackTrace();
         }
