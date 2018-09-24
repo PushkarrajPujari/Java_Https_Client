@@ -27,7 +27,7 @@ public class HttpsClient implements IClient{
     return null;
     }
 
-    public void getContent() {
-
+    public Object getContent() {
+        return null;
     }
 }

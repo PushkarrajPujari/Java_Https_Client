@@ -5,9 +5,7 @@ import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.HttpClientBuilder;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 
 public class ApacheClient implements IClient{
     private HttpClient client;
@@ -29,17 +27,16 @@ public class ApacheClient implements IClient{
         return this;
     }
 
-    public void getContent() {
-        String line = "";
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
-            while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
+    public IClient getContent() {
+        StringBuffer stringBuffer = getMethod(()-> {
+            try {
+                return response.getEntity().getContent();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
+            return null;
+        });
+        System.out.println(stringBuffer.toString());
+        return this;
     }
 }
