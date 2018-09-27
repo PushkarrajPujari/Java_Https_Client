@@ -17,14 +17,20 @@ public class Main {
     }
     public static void main(String[] args) {
         try {
-            System.setProperty("javax.net.ssl.trustStore", "D:\\KeyStore\\SSL\\keystore.jks");
-            System.setProperty("javax.net.ssl.keyStorePassword", "changeit" );
+            System.setProperty("javax.net.ssl.trustStore", "D:\\KeyStore\\SSL\\cacerts");
+            System.out.println(System.getProperty("javax.net.ssl.trustStore"));
+
             System.out.println("------------ X ------------");
             new ApacheClient("https://google.com").connect().getContent();
             System.out.println("------------ X ------------");
             new HttpsClient("https://google.com").connect().getContent();
             System.out.println("------------ X ------------");
-            new HttpsClient("https://localhost:8443").connect().getContent();
+
+            System.setProperty("javax.net.ssl.trustStore", "D:\\KeyStore\\SSL\\keystore.jks");
+            System.out.println(System.getProperty("javax.net.ssl.trustStore"));
+
+            new ApacheClient("https://localhost:8443/SampleTomcat/S1").connect().getContent();
+
         } catch (Exception e) {
             e.printStackTrace();
         }
